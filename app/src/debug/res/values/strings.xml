@@ -1,0 +1,23 @@
+<resources>
+  <integer name="distribution_type">0</integer>
+
+  <string name="app_name">Phunware Test Application</string>
+  <string name="load_button">Load ad</string>
+  <string name="result_text" formatted="false">Time: %.3fs. Result: %s.</string>
+  <string name="loading_text">Loading advertising content</string>
+
+  <string name="interstitial_placement_id">28</string>
+  <string name="video_placement_id">11</string>
+  <string name="video_placement_id_horizontal">22</string>
+  <string name="rewarded_video_placement_id">8</string>
+  <string name="rewarded_video_placement_id_horizontal">9</string>
+  <string name="native_placement_id">29</string>
+  <string name="medium_rectangle_placement_id">23</string>
+  <string name="standard_banner_placement_id">35</string>
+  <string name="large_banner_placement_id">26</string>
+  <string name="full_size_banner_placement_id">27</string>
+  <string name="leaderboard_placement_id">25</string>
+
+
+
+</resources>

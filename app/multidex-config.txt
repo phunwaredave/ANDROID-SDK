@@ -1,0 +1,2 @@
+com/google/gson/GsonBuilder.class
+com/google/gson/Gson.class
