@@ -50,7 +50,7 @@ public class AdActivity extends AppCompatActivity {
   private VideoContainer videoContainer;
   private RewardedVideoContainer rewardedVideoContainer;
   private NativeAdContainer nativeAdContainer;
-  private String reward = "RedBall";
+  private String reward = "coin";
   private int amount = 4;
   private EditText mPlacementEditText;
 
@@ -173,13 +173,7 @@ public class AdActivity extends AppCompatActivity {
       @Override
       public void onSuccess() {
         switchState(false);
-        showResult(getString(R.string.success_load)
-            + "\n"
-            + "We win present: "
-            + reward
-            + "\n"
-            + "count: "
-            + amount);
+        showResult(getString(R.string.success_load));
         Toast.makeText(AdActivity.this, R.string.success_load, Toast.LENGTH_SHORT).show();
       }
 
@@ -194,6 +188,12 @@ public class AdActivity extends AppCompatActivity {
   private void showRewardedVideo() {
     if (rewardedVideoContainer != null) {
       rewardedVideoContainer.showAd(provideOnCacheListener());
+      showResult("We win present: "
+          + reward
+          + "\n"
+          + "count: "
+          + amount);
+      Toast.makeText(AdActivity.this, "We win present: " + reward + "\n" + "count: " + amount, Toast.LENGTH_SHORT).show();
     } else {
       Toast.makeText(this, R.string.container_initialize, Toast.LENGTH_SHORT).show();
     }
