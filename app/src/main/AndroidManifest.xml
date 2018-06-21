@@ -2,10 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.phunware.testapplication">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- required for video ads -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
@@ -23,5 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AdActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="87205e2b1abb0fbb51fc76762b6208aaee6b9521" />
     </application>
 </manifest>
