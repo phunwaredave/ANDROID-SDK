@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     AdAdapter adapter = new AdAdapter(placementType ->  // Process selected ad
         AdActivity.start(this, placementType));
 
-    RecyclerView recyclerView = findViewById(R.id.ads_type_recycler);
+    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.ads_type_recycler);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
   }

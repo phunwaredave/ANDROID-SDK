@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.phunware.adcontainer.listener.BannerOnLoadListener;
 import com.phunware.adcontainer.listener.InterstitialListener;
 import com.phunware.adcontainer.listener.NativeOnLoadListener;
 import com.phunware.adcontainer.listener.OnCacheListener;
+import com.phunware.adcontainer.listener.RewardedVideoListener;
 import com.phunware.info.device.ScreenInfo;
 import com.phunware.info.provided.Gender;
 import com.phunware.info.provided.UserKeywords;
@@ -50,8 +52,6 @@ public class AdActivity extends AppCompatActivity {
   private VideoContainer videoContainer;
   private RewardedVideoContainer rewardedVideoContainer;
   private NativeAdContainer nativeAdContainer;
-  private String reward = "coin";
-  private int amount = 4;
   private EditText mPlacementEditText;
 
   public static void start(Context context, PlacementType placementType) {
@@ -77,11 +77,11 @@ public class AdActivity extends AppCompatActivity {
     }
 
     // controls
-    mStatusText = findViewById(R.id.status_text);
-    mContentView = findViewById(R.id.control_layout);
-    mProgressView = findViewById(R.id.loading_layout);
-    mAdContainer = findViewById(R.id.ad_container);
-    mPlacementEditText = findViewById(R.id.placementId_text);
+    mStatusText = (TextView) findViewById(R.id.status_text);
+    mContentView = (View) findViewById(R.id.control_layout);
+    mProgressView = (View) findViewById(R.id.loading_layout);
+    mAdContainer = (FrameLayout) findViewById(R.id.ad_container);
+    mPlacementEditText = (EditText) findViewById(R.id.placementId_text);
 
     findViewById(R.id.load_button).setOnClickListener(view -> {
       // preparation
@@ -162,23 +162,34 @@ public class AdActivity extends AppCompatActivity {
 
   private void loadRewardedVideo(String placementId) {
 
-    rewardedVideoContainer = new RewardedVideoContainer(this, placementId, reward, amount);
-    rewardedVideoContainer.loadAd(new InterstitialListener() {
-
-      @Override
-      public void closed() {
-        // Fullscreen closed. Nothing to do here in example case
+    rewardedVideoContainer = new RewardedVideoContainer(this, placementId);
+    rewardedVideoContainer.loadAd(new RewardedVideoListener() {
+      @Override public void onClicked() {
+        showResult(getString(R.string.clicked_ad));
+        Toast.makeText(AdActivity.this, R.string.clicked_ad, Toast.LENGTH_SHORT).show();
+        Log.d("[Phunware] ", getString(R.string.clicked_ad));
       }
 
-      @Override
-      public void onSuccess() {
+      @Override public void onCompleted() {
+        showResult(getString(R.string.completed_ad));
+        Toast.makeText(AdActivity.this, R.string.completed_ad, Toast.LENGTH_SHORT).show();
+        Log.d("[Phunware] ", getString(R.string.completed_ad));
+      }
+
+      @Override public void onClosed() {
+        showResult(getString(R.string.closed_ad));
+        Toast.makeText(AdActivity.this, R.string.closed_ad, Toast.LENGTH_SHORT).show();
+        Log.d("[Phunware] ", getString(R.string.closed_ad));
+      }
+
+      @Override public void onSuccess() {
         switchState(false);
         showResult(getString(R.string.success_load));
         Toast.makeText(AdActivity.this, R.string.success_load, Toast.LENGTH_SHORT).show();
+        Log.d("[Phunware] ", getString(R.string.success_load));
       }
 
-      @Override
-      public void onFailure(Exception e) {
+      @Override public void onFailure(Exception e) {
         switchState(false);
         showResult(e.getMessage());
       }
@@ -188,12 +199,6 @@ public class AdActivity extends AppCompatActivity {
   private void showRewardedVideo() {
     if (rewardedVideoContainer != null) {
       rewardedVideoContainer.showAd(provideOnCacheListener());
-      showResult("We win present: "
-          + reward
-          + "\n"
-          + "count: "
-          + amount);
-      Toast.makeText(AdActivity.this, "We win present: " + reward + "\n" + "count: " + amount, Toast.LENGTH_SHORT).show();
     } else {
       Toast.makeText(this, R.string.container_initialize, Toast.LENGTH_SHORT).show();
     }
@@ -203,7 +208,6 @@ public class AdActivity extends AppCompatActivity {
 
     interstitialAdContainer = new InterstitialAdContainer(this, placementId);
     interstitialAdContainer.loadAd(
-
         provideFullScreenAdListener());
   }
 
@@ -272,7 +276,7 @@ public class AdActivity extends AppCompatActivity {
   private InterstitialListener provideFullScreenAdListener() {
     return new InterstitialListener() {
       @Override
-      public void closed() {
+      public void onClosed() {
         // Fullscreen closed. Nothing to do here in example case
       }
 

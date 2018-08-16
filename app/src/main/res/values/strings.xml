@@ -18,6 +18,9 @@
     <string name="leaderboard_placement_id">19</string>
 
     <string name="success_load">Successfully loading</string>
+    <string name="clicked_ad">Clicked Ad</string>
+    <string name="closed_ad">Closed Ad</string>
+    <string name="completed_ad">Completed Ad</string>
     <string name="no_any_ad">No any ad in cache</string>
     <string name="input_placementId">Input placementId</string>
     <string name="container_initialize">Please, initialize container</string>
