@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
-import com.phunware.Ads;
 import com.phunware.adcontainer.context.PlacementType;
 import com.phunware.config.SdkConfig;
 import io.fabric.sdk.android.Fabric;
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     // init ads sdk
-    Ads.init(getApplicationContext());
     SdkConfig.GDPRconsentflag(true);
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
